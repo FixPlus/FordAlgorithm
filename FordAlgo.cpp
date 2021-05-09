@@ -192,18 +192,23 @@ std::map<Graph::Vid, Graph::Weight> fordAlgorithmJustDistance(Graph::Vid s, Grap
 
         auto it = graph.begin();
 
-        for(int j = 0; j < active_threads; ++j, ++it)
-            threads.emplace_back(fordAlgorithmSubRoutine, std::ref(graph), (*it).first, std::ref(retSwp), std::ref(ret));
+        for(int j = 0; j < active_threads; ++j, ++it) {
+            if(i % 2 == 0)
+                threads.emplace_back(fordAlgorithmSubRoutine, std::ref(graph), (*it).first, std::ref(retSwp),
+                                    std::ref(ret));
+            else
+                threads.emplace_back(fordAlgorithmSubRoutine, std::ref(graph), (*it).first, std::ref(ret),
+                                     std::ref(retSwp));
 
+        }
         for(auto& thread: threads)
             thread.join();
 
-        for(auto& node: ret){
-            retSwp[node.first] = node.second;
-        }
     }
 
     calc_mutex.unlock();
-
-    return ret;
+    if((graph.size() - 2) % 2 == 0)
+        return ret;
+    else
+        return retSwp;
 }

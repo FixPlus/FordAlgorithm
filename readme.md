@@ -1,4 +1,4 @@
-# Ford Algorythm
+# Ford Algorithm
 
 ## building
     ./build.sh

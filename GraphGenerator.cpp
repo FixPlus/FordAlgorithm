@@ -9,7 +9,7 @@ void generate(Graph& graph, int vertCount, int sparsity){
     for(int i = 0; i < vertCount; ++i)
         graph.addVertex(i + 1);
 
-    for(int i = 0; i < vertCount * vertCount / sparsity; ++i){
+    for(int i = 0; i < vertCount * vertCount / sparsity / sparsity; ++i){
         Graph::Vid v1 = rand() % vertCount + 1;
         Graph::Vid v2 = rand() % vertCount + 1;
         int weight = rand() % 15 + 1;
